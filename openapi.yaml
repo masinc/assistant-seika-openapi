@@ -1,0 +1,234 @@
+openapi: "3.0.2"
+info:
+  title: HTTP API using AssistantSeika  
+  license:
+    name: MIT
+  version: "0.0.1"
+  description: |
+    **The OpenAPI definition is not related to the AssistantSeika author (k896951-san)**
+
+    HTTP API using AssistantSeika
+
+    see: [https://hgotoh.jp/wiki/doku.php/documents/voiceroid/assistantseika/assistantseika-000](https://hgotoh.jp/wiki/doku.php/documents/voiceroid/assistantseika/assistantseika-000)
+servers:
+  - url: http://assistant-seika:7180/
+  - url: http://localhost:7180/
+paths:
+  /VERSION:
+    get:
+      operationId: version
+      security:
+        - BasicAuth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Version"
+  /AVATOR2:
+    get:
+      operationId: avators
+      security:
+        - BasicAuth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/AvatorInformation"
+  /AVATOR2/{cid}/:
+    get:
+      operationId: avator
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: cid
+          required: true
+          schema:
+            $ref: "#/components/schemas/Cid"      
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Avator"
+  /AVATOR2/{cid}/current:
+    get:
+      operationId: avatorForCurrent
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: cid
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Avator"
+  /PLAY2/{cid}:
+    post:
+      operationId: play
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: cid
+          required: true
+          schema:
+            $ref: "#/components/schemas/Cid"
+      requestBody:        
+        required: true
+        content:
+          application/json:
+            examples:
+              simple:
+                value:
+                  talktext: "こんにちは"
+              withParams:
+                summary: Kotonoha sisters for A.I.Voice
+                value:
+                  talktext: "今日はいい天気ですね。"                
+                  emotions:
+                    "喜び": 0.25                  
+                  effects:
+                    speed: 1.05
+                    pitch: 0.8
+                    intonation: 1.2
+            schema:
+              "$ref": "#/components/schemas/PlayRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayResponse"
+  /SAVE2/{cid}:    
+    post:
+      operationId: save
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: cid
+          required: true          
+          schema:
+            $ref: "#/components/schemas/Cid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              simple:
+                value:
+                  talktext: "こんにちは"          
+            schema:
+              "$ref": "#/components/schemas/PlayRequest"
+      responses:
+        "200":
+          description: OK
+  /SAVE2/{cid}/{sampleRate}:
+    post:
+      operationId: saveWithHeltz
+      security:
+        - BasicAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: cid
+          required: true
+          schema:
+            $ref: "#/components/schemas/Cid"
+        - name: sampleRate
+          in: path
+          description: sampleRate
+          required: true
+          schema:
+            "$ref": "#/components/schemas/SampleRate"
+      requestBody:
+        required: true
+        content:        
+          application/json:
+            examples:
+              simple:
+                value:
+                  talktext: "こんにちは"          
+            schema:
+              "$ref": "#/components/schemas/PlayRequest"
+      responses:
+        "200":
+          description: OK
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Version:
+      type: object
+      properties:
+        version:
+          type: string
+    Avator:
+      type: object
+      additionalProperties: true
+    AvatorInformation:
+      type: object
+      properties:
+        cid:
+          $ref: "#/components/schemas/Cid"
+        isalias:
+          type: boolean
+        name:
+          description: Product name
+          type: string
+        platform:
+          description: Platform
+          type: string
+        prod:
+          description: Product
+          type: string
+    PlayResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    PlayRequest:
+      required:
+        - "talktext"
+      properties:
+        talktext:
+          description: Talk text string
+          type: string
+        effects:
+          type: object
+          additionalProperties: true
+        emotions:
+          type: object
+          additionalProperties: true
+    Cid:
+      type: integer
+      format: int64
+    SampleRate:
+      type: integer
+      enum:
+        - 8000
+        - 16000
+        - 22050
+        - 44100
+        - 48000

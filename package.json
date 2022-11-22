@@ -1,0 +1,18 @@
+{
+  "name": "assistant-seika-openapi",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cli": "openapi-generator-cli",
+    "gen:python": "openapi-generator-cli generate -i openapi.yaml -g python -o dist/python",
+    "gen:rust": "openapi-generator-cli generate -i openapi.yaml -g rust -o dist/rust"
+  },
+  "keywords": [],
+  "author": "masinc <masinc000@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.2"
+  }
+}
