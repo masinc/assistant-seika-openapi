@@ -1,6 +1,6 @@
 openapi: "3.0.2"
 info:
-  title: HTTP API using AssistantSeika  
+  title: HTTP API using AssistantSeika
   license:
     name: MIT
   version: "0.0.1"
@@ -51,7 +51,7 @@ paths:
           description: cid
           required: true
           schema:
-            $ref: "#/components/schemas/Cid"      
+            $ref: "#/components/schemas/Cid"
       responses:
         "200":
           description: OK
@@ -90,7 +90,7 @@ paths:
           required: true
           schema:
             $ref: "#/components/schemas/Cid"
-      requestBody:        
+      requestBody:
         required: true
         content:
           application/json:
@@ -101,9 +101,9 @@ paths:
               withParams:
                 summary: Kotonoha sisters for A.I.Voice
                 value:
-                  talktext: "今日はいい天気ですね。"                
+                  talktext: "今日はいい天気ですね。"
                   emotions:
-                    "喜び": 0.25                  
+                    "喜び": 0.25
                   effects:
                     speed: 1.05
                     pitch: 0.8
@@ -117,7 +117,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PlayResponse"
-  /SAVE2/{cid}:    
+  /SAVE2/{cid}:
     post:
       operationId: save
       security:
@@ -126,7 +126,7 @@ paths:
         - name: cid
           in: path
           description: cid
-          required: true          
+          required: true
           schema:
             $ref: "#/components/schemas/Cid"
       requestBody:
@@ -136,7 +136,7 @@ paths:
             examples:
               simple:
                 value:
-                  talktext: "こんにちは"          
+                  talktext: "こんにちは"
             schema:
               "$ref": "#/components/schemas/PlayRequest"
       responses:
@@ -162,12 +162,12 @@ paths:
             "$ref": "#/components/schemas/SampleRate"
       requestBody:
         required: true
-        content:        
+        content:
           application/json:
             examples:
               simple:
                 value:
-                  talktext: "こんにちは"          
+                  talktext: "こんにちは"
             schema:
               "$ref": "#/components/schemas/PlayRequest"
       responses:
