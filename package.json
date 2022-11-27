@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cli": "openapi-generator-cli",
-    "gen:python": "openapi-generator-cli generate -i openapi.yaml -g python -o dist/python",
-    "gen:rust": "openapi-generator-cli generate -i openapi.yaml -g rust -o dist/rust"
+    "gen:python": "openapi-generator-cli generate --package-name assistant_seika -i openapi.yaml -g python -o dist/python/assistant_seika",
+    "gen:rust": "openapi-generator-cli generate --package-name assistant_seika -i openapi.yaml -g rust -o dist/rust/assistant-seika"
   },
   "keywords": [],
   "author": "masinc <masinc000@gmail.com>",
