@@ -1,0 +1,32 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  IMAGE: openapitools/openapi-generator-cli
+  OPENAPI_FILE: /local/openapi.yaml
+  DOCKER_RUN: docker run --rm -v "${PWD}:/local" {{.IMAGE}}
+tasks:
+  cli:
+    cmds:
+      - >-
+        {{.DOCKER_RUN}}
+        {{.CLI_ARGS}}
+  generate-python:
+    cmds:
+      - >-
+        {{.DOCKER_RUN}}
+        generate
+        -i {{.OPENAPI_FILE}}
+        -g python
+        --package-name assistant_seika
+        -o /local/dist/python/assistant_seika
+  generate-rust:
+    cmds:
+      - >-
+        {{.DOCKER_RUN}}
+        generate
+        -i {{.OPENAPI_FILE}}
+        -g rust
+        --package-name assistant_seika
+        -o /local/dist/rust/assistant-seika
