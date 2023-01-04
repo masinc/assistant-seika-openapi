@@ -3,7 +3,7 @@ info:
   title: HTTP API using AssistantSeika
   license:
     name: MIT
-  version: "0.0.1"
+  version: "0.0.2"
   description: |
     HTTP API using AssistantSeika
 
@@ -136,7 +136,7 @@ paths:
                 value:
                   talktext: "こんにちは"
             schema:
-              "$ref": "#/components/schemas/PlayRequest"
+              $ref: "#/components/schemas/PlayRequest"
       responses:
         "200":
           description: OK
@@ -157,7 +157,7 @@ paths:
           description: sampleRate
           required: true
           schema:
-            "$ref": "#/components/schemas/SampleRate"
+            $ref: "#/components/schemas/SampleRate"
       requestBody:
         required: true
         content:
@@ -167,7 +167,7 @@ paths:
                 value:
                   talktext: "こんにちは"
             schema:
-              "$ref": "#/components/schemas/PlayRequest"
+              $ref: "#/components/schemas/PlayRequest"
       responses:
         "200":
           description: OK
@@ -208,7 +208,7 @@ components:
           type: string
     PlayRequest:
       required:
-        - "talktext"
+        - talktext
       properties:
         talktext:
           description: Talk text string
